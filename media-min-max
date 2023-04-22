@@ -1,0 +1,37 @@
+# imputando os dados em variáveis, no caso, meses e temperatura
+meses <- c("Janeiro","Fevereiro","Marco","Abril","Maio","Junho","Julho","Agosto","Setembro","Outubro","Novembro","Dezembro")
+temp <- c(21,31,19,23,25,27,18,15,20,23,27,30)
+
+# criando um data frame (planilha do excel, conectando os dois) e colocando em uma variável, no caso "pl"
+pl <- data.frame (meses,temp)
+pl
+cat ('\n') # cat () não imprimi o resultuado do código sem aparecem os escapes, ao contrário do print ()
+
+# esse aqui é só um exemplinho amigo! lol, para escolher a posição, é preciso utilizar colchetes
+# pl$temp[pl$meses=='Dezembro'] 
+
+# já para se referir a, usa-se parentes
+# aqui nesse caso estamos busanda a média dos valores
+results = "ceiling (mean (temp))"  # usando result = "", ele roda o código  mas não usa o resultado.
+d <- ceiling (mean (temp)) # ceiling () arredonta o valor para cima
+cat ('\nA média de temperatura anual é de ', d, '°C.\n') 
+
+# calculando a maior e a menor temperatura
+mai_t = 0
+men_t = 100 # eu coloquei esse o valor, pq eu tava colocando 0 e ele estava crashando, uma vez que não temos valores menores que zero. Então eu peguei um valor super grande. Mas se tiver outro jeito, comenta aí e me ajuda! lol em uma big data, pode descobrir o maior valor e colocar no valor de menor. eu faria essa gambs! lol
+
+for (i in pl$temp)
+	{
+    if (i > mai_t)
+    	{
+        mai_t <- i}
+     } 
+ 
+for (i in pl$temp)
+	{
+    if (i < men_t)
+    	{ 
+        men_t <- i}
+    } 
+
+cat ("A máxima foi de",mai_t,"°C e a mínima foi de",men_t,"°C.")
