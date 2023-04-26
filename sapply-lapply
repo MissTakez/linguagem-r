@@ -1,0 +1,71 @@
+# Código com aprendizados abaixo da obs.
+substituir_na <- function(df){
+
+col_num <- sapply(df,is.numeric) 
+  
+df[, col_num] <- lapply(df[, col_num], function(X) {
+  ifelse(is.na(X) | is.nan(X), mean(X, na.rm = TRUE), X)
+})
+
+col_nao_num <- !col_num 
+
+for (col in names(df[, col_nao_num])) {
+moda <- names(which.max(table(df[, col], useNA = "ifany"))) 
+df[, col] <- ifelse(is.na(df[, col]), moda, df[, col])
+  }
+  
+  return (df)
+}
+df <- data.frame(
+  x = c(1,2,3,NA,5),
+  y = c("a","b","c",NA,"b"),
+  z = c (TRUE, FALSE,NA, FALSE, TRUE)
+)
+df <- substituir_na(df)
+print(df)
+
+##obs: O GPT DEU OUTRA RESPOSTA, MAS NÃO ESTOU ENTENDENDO PQ! 
+Aqui a resposta do ChatGPT:
+     x y     z
+1 1.00 a  TRUE
+2 2.00 b FALSE
+3 3.00 c  TRUE
+4 2.75 b  TRUE
+5 5.00 b FALSE
+
+# criando a função
+substituir_na <- function(df){
+
+# identifica a coluna numérica
+col_num <- sapply(df,is.numeric) 
+#saplly é da famíia dos "apply". Sempre que possível substituir o for e o if pela família do "apply". O "sapply" ela é muito útil para a análise descritiva (etapa inicial da análise de dados e tem por objetivo descrever os dados observados).
+  
+ # substituindo os valores que faltam, pela média
+df[, col_num] <- lapply(df[, col_num], function(X) {
+  ifelse(is.na(X) | is.nan(X), mean(X, na.rm = TRUE), X)
+})
+  # explicando um pouco esse código anterior: a virgula após o colchete [, col_num] é colocado para especificar as 2 dimensões. Nesse caso, ele só trará a conluna que foi identificada como numérica, pelo sapply ali de cima.  
+
+#identifica as colunas que são caracteres e lógica
+col_nao_num <- !col_num #esse ! quer dizer não! 
+
+# substituindo os valores que faltam, por valores mais frequentes
+for (col in names(df[, col_nao_num])) {
+moda <- names(which.max(table(df[, col], useNA = "ifany"))) #infany é usada em tabelas para considerar também os valores que faltam (NA)
+df[, col] <- ifelse(is.na(df[, col]), moda, df[, col])
+# substitução dos valores ausentes (NA) em uma coluna específica de df pelo valor mais frequente (moda), mantendo os valores não-ausentes originais.            
+  }
+  return (df)
+}
+
+# imputando os dados em variáveis
+df <- data.frame(
+  x = c(1,2,3,NA,5),
+  y = c("a","b","c",NA,"b"),
+  z = c (TRUE, FALSE,NA, FALSE, TRUE)
+)
+# chamando a função
+df <- substituir_na(df)
+
+# imprimindo o resultado
+print(df)
