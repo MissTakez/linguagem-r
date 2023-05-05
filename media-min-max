@@ -21,17 +21,17 @@ mai_t = 0
 men_t = 100 # eu coloquei esse o valor, pq eu tava colocando 0 e ele estava crashando, uma vez que não temos valores menores que zero. Então eu peguei um valor super grande. Mas se tiver outro jeito, comenta aí e me ajuda! lol em uma big data, pode descobrir o maior valor e colocar no valor de menor. eu faria essa gambs! lol
 
 for (i in pl$temp)
-	{
+{
     if (i > mai_t)
-    	{
+    {
         mai_t <- i}
-     } 
- 
-for (i in pl$temp)
-	{
-    if (i < men_t)
-    	{ 
-        men_t <- i}
     } 
+ 
+ for (i in pl$temp)
+ {
+    if (i < men_t)
+ { 
+        men_t <- i}
+ } 
 
 cat ("A máxima foi de",mai_t,"°C e a mínima foi de",men_t,"°C.")
